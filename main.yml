@@ -26,7 +26,7 @@
         name: host_cred
         organization: test_org
         state: present
-        credential_type: Source Control
+        credential_type: Machine
         inputs:
           username: vagrant
           password: vagrant
@@ -36,9 +36,9 @@
         tower_config_file: "./tower_cli.cfg"
         name: "test_proj"
         description: "Foo bar project"
-        organization: "Foo"
+        organization: "test_org"
         scm_type: git
-        scm_url: https://github.com/remrad00/Test_automation_tool.git
-        scm_branch: master
+        scm_url: https://github.com/remrad00/test_project.git
+        scm_branch: main
         scm_credential: test_cred
         state: present
