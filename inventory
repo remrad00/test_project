@@ -1,0 +1,2 @@
+localhost ansible_connection=local
+#192.168.7.10 ansible_user=vagrant ansible_password=vagrant

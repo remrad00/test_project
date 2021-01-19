@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks: 
+    - name: Add Job Template a.k.a. Playbook
+      raw: hostname && date
+      register: var_output
+
+    - debug:
+        msg: "{{ var_output }}"
+  

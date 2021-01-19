@@ -1,0 +1,44 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks: 
+    - name: Create tower organization
+      tower_organization:
+        tower_config_file: "./tower_cli.cfg"
+        name: "test_org"
+        description: "Foo bar organization"
+        state: present
+
+    - name: Create a valid SCM credential from a private_key file
+      tower_credential:
+        tower_config_file: "./tower_cli.cfg"
+        name: test_cred
+        organization: test_org
+        state: present
+        credential_type: Source Control
+        inputs:
+          username: remrad00
+          password: 61406b10b651cc56250191955341a040b6118739
+
+    - name: Create a host login credential
+      tower_credential:
+        tower_config_file: "./tower_cli.cfg"
+        name: host_cred
+        organization: test_org
+        state: present
+        credential_type: Source Control
+        inputs:
+          username: vagrant
+          password: vagrant
+
+    - name: Add tower project
+      tower_project:
+        tower_config_file: "./tower_cli.cfg"
+        name: "test_proj"
+        description: "Foo bar project"
+        organization: "Foo"
+        scm_type: git
+        scm_url: https://github.com/remrad00/Test_automation_tool.git
+        scm_branch: master
+        scm_credential: test_cred
+        state: present

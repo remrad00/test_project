@@ -1,0 +1,21 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks: 
+    - name: Add tower inventory
+      tower_inventory:
+        tower_config_file: "./tower_cli.cfg"
+        name: "test_inventory"
+        description: "Our Foo Cloud Servers"
+        organization: "test_org"
+        state: present
+
+    - name: Add host
+      tower_host:
+        tower_config_file: "./tower_cli.cfg"
+        name: control_machine
+        description: "Local Host Group"
+        inventory: "test_inventory"
+        state: present
+        variables:
+          ansible_host: 192.168.7.250

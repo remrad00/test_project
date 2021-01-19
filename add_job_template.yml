@@ -1,0 +1,16 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks: 
+    - name: Add Job Template a.k.a. Playbook
+      tower_job_template:
+        tower_config_file: "./tower_cli.cfg"
+        name: "Ping"
+        job_type: "run"
+        organization: "test_org"
+        inventory: "test_inventory"
+        project: "test_proj"
+        playbook: "ping.yml"
+        credentials:
+          - "Local"
+        state: "present"
