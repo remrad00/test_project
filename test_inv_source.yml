@@ -1,0 +1,18 @@
+all:
+  hosts:
+    host_control_machine:
+      ansible_user: vagrant
+      ansible_host: 192.168.7.250
+      ansible_password: vagrant
+    host_docker_machine:
+      ansible_host: 192.168.7.10
+  children:
+    group_control_machine:
+      hosts:
+        host_control_machine:
+    group_docker_machine:
+      hosts:
+        host_docker_machine:
+      vars:
+        ansible_user: vagrant
+        ansible_password: vagrant
