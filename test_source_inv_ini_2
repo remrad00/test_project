@@ -1,12 +1,12 @@
 [all]
-host_control_machine_ini_1 ansible_user=vagrant ansible_host=192.168.7.250 ansible_password=vagrant
-host_docker_machine_ini_1 ansible_host=192.168.7.10
+host_control_machine_ini_2 ansible_user=vagrant ansible_host=192.168.7.250 ansible_password=vagrant
+host_docker_machine_ini_2 ansible_host=192.168.7.10
 
 [group_control_machine_ini]
-host_control_machine_ini_1
+host_control_machine_ini_2
 
 [group_docker_machine_ini]
-host_docker_machine_ini_1
+host_docker_machine_ini_2
 
 [group_docker_machine_ini:vars]
 ansible_user=vagrant
