@@ -1,0 +1,8 @@
+---
+- name: Create tower organization.
+  tower_organization:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    state: "{{ item.state }}"
+    name: "{{ item.orgname }}"
+    description: "{{ item.description }}"
+  loop: "{{ list_org }}"

@@ -4,14 +4,103 @@
 
 Finsihed writing draft playbooks for the following:
 * AWX Management
- * Add organization
- * Add SCM login credential
- * Add host login credetial
- * Add project
- * Add inventory
- * Add host
- * Add job template (playbook)
+ * organization
+ * SCM login credential
+ * host login credetial
+ * project
+ * inventory
+ * host
+ * job template (playbook)
+ * Inventory source
+ * Playbook for user accounts management
+
+Pending items:
+ * Variable files
+ * Playbook for secrets management
+ * Determine low-level tasks to be automated
+ * Development process (Playbook on-boarding)
+
 I have also initialized project repo for this in our enterprise GitLab.
  * 
 
 I'll finalize these playbooks and upload it in our repo tomorrow
+
+* Check DNS resolution in awx_task
+* Project update task - modify /var/lib/awx/venv/awx/lib/python3.6/site-packages/awx/playbooks/project_update.yml
+
+
+GitLab - Repository 
+  - Playbooks
+  - Roles
+  - Scripts
+  - Inventory
+
+High-level preocess
+  1. user logs into AWX
+  2. user determines the inventory to use or create a new one
+  3. user selects from available playbooks
+  4. user schedules the time to launch the job
+  5. user gets output
+
+User Story
+  1. As a user, I want to launch a job that will let me get all interface descriptions from a set of devices.
+
+
+
+  
+
+  When Discards/Errors reach 500 get Utilization
+
+Directory Layout
+variable_files/
+  var_awx.yml
+  
+inventory/
+  inv_prod
+  inv_dev
+
+group_vars/
+
+host_vars/
+
+roles/
+  awx_manage_user/
+    tasks/
+      main.yml
+    defaults/
+      main.yml
+  awx_manage_org/
+    tasks/
+      main.yml
+    defaults/
+      main.yml
+  awx_manage_cred/
+    tasks/
+      main.yml
+    defaults/
+      main.yml
+  awx_manage_proj/
+    tasks/
+      main.yml
+    defaults/
+      main.yml
+  awx_manage_inv/
+    tasks/
+      main.yml
+    defaults/
+      main.yml
+  awx_manage_job/
+    tasks/
+      main.yml
+    defaults/
+      main.yml
+
+
+Plbk_awx_mgmt_proj_main.yml
+tower_cli.cfg
+.gitignore
+
+
+
+ansible-playbook -i inv_test Plbk_awx_mgmt_proj_main.yml -e "tower_config_path=./tower_cli.cfg" -vvv
+ansible-playbook -i inv_test Plbk_awx_mgmt_proj_main.yml -e "tower_config_path=./tower_cli.cfg var_scm_password=61406b10b651cc56250191955341a040b6118739" -vvv

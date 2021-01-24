@@ -1,0 +1,61 @@
+---
+- name: Update tower project.
+  awx.awx.tower_project_update:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    project: "{{ item.projname }}"
+    wait: true
+  when: item.state =='present'
+  loop: "{{ list_invsrc }}"
+
+- name: Add tower inventory.
+  tower_inventory:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    state: "{{ item.state }}"
+    name: "{{ item.invname }}"
+    description: "{{ item.description }}"
+    organization: "{{ item.orgname }}"
+  when: item.state =='present'
+  loop: "{{ list_inv }}"
+
+- name: Add tower inventory source.
+  tower_inventory_source:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    state: "{{ item.state }}"
+    name: "{{ item.invsrcname }}"
+    description: "{{ item.description }}"
+    inventory: "{{ item.invname }}"
+    source: "{{ item.type }}"
+    source_project: "{{ item.projname }}"
+    source_path: "{{ item.path }}"
+    update_on_launch: true
+    update_cache_timeout: 86400
+  when: item.state =='present'
+  loop: "{{ list_invsrc }}"
+  notify:
+   - Update tower inventory source (Sync)
+
+- name: Delete tower inventory source.
+  tower_inventory_source:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    state: "{{ item.state }}"
+    inventory: "{{ item.invname }}"
+    name: "{{ item.invsrcname }}"
+  when: item.state =='absent'
+  loop: "{{ list_invsrc }}"
+  notify:
+    - Rebuild tower inventory (Pause)
+    - Rebuild tower inventory (Delete)
+    - Rebuild tower inventory (Add)
+    - Rebuild tower inventory source (Add)
+    - Update tower inventory source (Sync)
+
+- name: Delete tower inventory.
+  tower_inventory:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    state: "{{ item.state }}"
+    name: "{{ item.invname }}"
+    organization: "{{ item.orgname }}"
+  when: item.state =='absent'
+  loop: "{{ list_inv }}"
+
+  

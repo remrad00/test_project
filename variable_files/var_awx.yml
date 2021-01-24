@@ -1,0 +1,139 @@
+---
+
+##### ORGANIZATION #####
+list_org:
+  - orgname: netops
+    state: present
+    description: TPICAP Network Operations
+    
+  - orgname: neteng
+    state: present
+    description: TPICAP Network Engineering
+    
+  - orgname: networks
+    state: present
+    description: TPICAP Network Operations & Engineering
+
+##### CREDENTIALS #####
+list_cred:  
+# credential_type options:
+#   - Amazon Web Services
+#   - Ansible Galaxy/Automation Hub API Token
+#   - Ansible Tower
+#   - CyberArk AIM Central Credential Provider Lookup
+#   - CyberArk Conjur Secret Lookup
+#   - Github Personal Access Token
+#   - GiLab Personal Access Token
+#   - HashiCorp Vault Secret Lookup
+#   - HashiCorp Vault Signed SSH
+#   - Insights
+#   - Machine
+#   - Microsoft Azure Key Vault
+#   - Microsoft Azurre Resource Manager
+#   - Network
+#   - Openshift or Kubernetes API Bearer Token
+#   - OpenStack
+#   - Red Hat Satellite 6
+#   - Red Hat Virtualization
+#   - Source Control
+#   - Vault
+#   - VMware vCenter
+
+  - credname: cred_test_scm
+    state: present
+    orgname: netops
+    inputs:
+      username: remrad00
+      password: changeme123! #61406b10b651cc56250191955341a040b6118739
+    credential_type: Source Control
+  
+  - credname: cred_test_host
+    state: present
+    orgname: netops
+    inputs:
+      username: vagrant
+      password: changeme123!
+    credential_type: Machine
+
+##### PROJECT #####
+list_proj:  
+  - projname: test_proj
+    state: present
+    description: "Foo bar project"
+    orgname: netops
+    scm_type: git
+    scm_url: https://github.com/remrad00/test_project.git
+    scm_branch: main
+    scm_credential: cred_test_scm
+
+##### INVENTORY #####
+list_inv:  
+  - invname: test_inventory
+    state: present
+    description: "Foo bar inventory"
+    orgname: netops
+
+list_invsrc:
+## inventory source 1 ##
+  - invsrcname: test_source_inv_yml
+    state: present
+    description: YML source inventory
+    invname: test_inventory
+    type: scm
+    projname: test_proj
+    path: test_source_inv_yml
+
+  - invsrcname: test_source_inv_ini
+    state: present
+    description: INI source inventory
+    invname: test_inventory
+    type: scm
+    projname: test_proj
+    path: test_source_inv_ini
+
+## inventory source 2 ##
+  - invsrcname: test_source_inv_yml_2
+    state: absent
+    description: YML source inventory 2
+    invname: test_inventory
+    type: scm
+    projname: test_proj
+    path: test_source_inv_yml_2
+
+  - invsrcname: test_source_inv_ini_2
+    state: absent
+    description: INI source inventory 2
+    invname: test_inventory
+    type: scm
+    projname: test_proj
+    path: test_source_inv_ini_2
+
+## inventory source 3 ##
+  - invsrcname: test_source_inv_yml_3
+    state: present
+    description: YML source inventory 3
+    invname: test_inventory
+    type: scm
+    projname: test_proj
+    path: test_source_inv_yml_3
+
+  - invsrcname: test_source_inv_ini_3
+    state: present
+    description: INI source inventory 3
+    invname: test_inventory
+    type: scm
+    projname: test_proj
+    path: test_source_inv_ini_3
+
+##### JOBS #####
+list_job:
+## job 1 ##
+  - jobname:
+    state:
+    type:
+    orgname:
+    invname:
+    projname:
+    playbook:
+    credname:
+    allow_simultaneous: false #default false

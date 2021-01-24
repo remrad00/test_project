@@ -1,0 +1,22 @@
+---
+- name: Create scm credential.
+  tower_credential:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    state: "{{ item.state }}"
+    name: "{{ item.credname }}"
+    organization: "{{ item.orgname }}"
+    credential_type: "{{ item.credential_type }}"
+    inputs:
+      username: "{{ item.inputs.username }}"
+      password: "{{ scm_password }}" #define as extra vars
+  when: item.state =='present'
+  loop: "{{ list_cred }}"
+
+- name: Delete scm credential.
+  tower_credential:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    state: "{{ item.state }}"
+    name: "{{ item.credname }}"
+    credential_type: "{{ item.credential_type }}"
+  when: item.state =='absent'
+  loop: "{{ list_cred }}"

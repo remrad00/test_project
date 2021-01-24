@@ -1,0 +1,14 @@
+---
+- hosts: all
+  gather_facts: false
+  vars:
+    tower_config_file: "{{ tower_config_path }}" #define as extra vars
+    scm_password: "{{ var_scm_password }}"
+  vars_files:
+    - ./variable_files/var_awx.yml
+
+  roles:
+    - {role: 'role_awx_manage_org', tags: 'awx_manage_org'}
+    - {role: 'role_awx_manage_cred', tags: 'awx_manage_cred'}
+    - {role: 'role_awx_manage_proj', tags: 'awx_manage_proj'}
+    - {role: 'role_awx_manage_inv', tags: 'awx_manage_inv'}

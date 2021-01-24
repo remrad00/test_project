@@ -1,0 +1,15 @@
+---
+- name: Add tower job.
+  tower_job_template:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    state: "{{ item.state }}"
+    name: "{{ item.jobname }}"
+    job_type: "{{ item.type }}"
+    organization: "{{ item.orgname }}"
+    inventory: "{{ item.invname }}"
+    project: "{{ item.projname }}"
+    playbook: "{{ item.playbook }}"
+    credentials:
+      - "{{ item.credname }}"
+  when: item.state =='present'
+  loop: "{{ list_job }}"

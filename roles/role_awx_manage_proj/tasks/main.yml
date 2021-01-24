@@ -1,0 +1,32 @@
+---
+- name: Add awx project.
+  tower_project:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    state: "{{ item.state }}"
+    name: "{{ item.projname }}"
+    description: "{{ item.description }}"
+    organization: "{{ item.orgname }}"
+    scm_type: "{{ item.scm_type }}"
+    scm_url: "{{ item.scm_url }}"
+    scm_branch: "{{ item.scm_branch }}"
+    scm_credential: "{{ item.scm_credential }}"
+    scm_update_on_launch: true
+    wait: true
+  when: item.state == 'present'
+  loop: "{{ list_proj }}"
+
+- name: Update awx project
+  awx.awx.tower_project_update:
+    project: "test_proj"
+    timeout: 60
+    wait: true
+  when: item.state == 'present'
+  loop: "{{ list_proj }}"
+
+- name: Delete awx project.
+  tower_project:
+    tower_config_file: "{{ tower_config_file }}" #define as extra vars
+    state: "{{ item.state }}"
+    name: "{{ item.projname }}"
+  when: item.state == 'absent'
+  loop: "{{ list_proj }}"

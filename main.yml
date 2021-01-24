@@ -41,4 +41,5 @@
         scm_url: https://github.com/remrad00/test_project.git
         scm_branch: main
         scm_credential: test_cred
+        scm_update_on_launch: true
         state: present
