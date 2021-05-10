@@ -44,7 +44,7 @@ list_cred:
     orgname: netops
     inputs:
       username: remrad00
-      password: changeme123! #61406b10b651cc56250191955341a040b6118739
+      password: changeme123!
     credential_type: Source Control
   
   - credname: cred_test_host
